@@ -9,6 +9,12 @@ class ProfileSchema(Schema):
     seeking = fields.Str(validate=validate.Length(max=50))
     last_login = fields.Str(dump_only=True)
 
+class UpdateProfileSchema(Schema):
+    location = fields.Str()
+    bio = fields.Str(validate=validate.Length(max=150))
+    five_interests = fields.Str(validate=validate.Length(max=50))
+    seeking = fields.Str(validate=validate.Length(max=50))
+
 class SingleSchema(Schema):
     id = fields.Str(dump_only = True)
     username = fields.Str(required = True, validate=validate.Length(max=30))

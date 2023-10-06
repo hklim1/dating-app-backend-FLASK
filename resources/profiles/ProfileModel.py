@@ -9,8 +9,8 @@ class ProfileModel(db.Model):
     single_id = db.Column(db.Integer, db.ForeignKey('singles.id'), nullable = False)
     location = db.Column(db.String, nullable = False)
     bio = db.Column(db.String(150), default="Nothing to see here.")
-    five_interests = db.Column(db.String(30))
-    seeking = db.Column(db.String(30))
+    five_interests = db.Column(db.String(50))
+    seeking = db.Column(db.String(50))
     last_login = db.Column(db.String, default = datetime.utcnow)
 
     def __repr__(self):

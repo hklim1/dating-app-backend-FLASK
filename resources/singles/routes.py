@@ -69,6 +69,6 @@ class LikeSingle(MethodView):
     single = SingleModel.query.get(liker_id)
     single_to_unlike = SingleModel.query.get(liked_id)
     if single and single_to_unlike:
-      single.unlike_user(single_to_unlike)
-      return {'message': f'Unliked Single: {single_to_unlike.username} unfollowed'}, 202
+      single.unlike_single(single_to_unlike)
+      return {'message': f'Unliked Single: {single_to_unlike.username}'}, 202
     abort(400, message='Invalid single info')  

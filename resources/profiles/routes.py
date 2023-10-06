@@ -8,14 +8,14 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from resources.singles.SingleModel import SingleModel
 
 from .ProfileModel import ProfileModel
-from schemas import ProfileSchema
+from schemas import ProfileSchema, UpdateProfileSchema
 from . import bp
 
 
 @bp.route('/')
 class ProfileList(MethodView):
   
-    @jwt_required()
+    # @jwt_required()
     @bp.response(200, ProfileSchema(many=True))
     def get(self):
         return ProfileModel.query.all()
@@ -44,14 +44,15 @@ class Profile(MethodView):
         abort(400, message='Invalid Profile ID')
 
     @jwt_required()
-    @bp.arguments(ProfileSchema)
-    @bp.response(200, ProfileSchema)
-    def put(self, profile_data, profile_id):
+    @bp.arguments(UpdateProfileSchema)
+    @bp.response(200, UpdateProfileSchema)
+    def put(self, profile_data,profile_id):
         p = ProfileModel.query.get(profile_id)
         if p: #Could add something here like "if p and profile_data['body']", but nothing will really guaranteed change for this
             single_id = get_jwt_identity()
             if p.single_id == single_id:
-                p.location == profile_data['location']
+                if 'location' in profile_data:
+                    p.location = profile_data['location']
                 if 'bio' in profile_data:
                     p.bio = profile_data['bio']
                 if 'five_interests' in profile_data:
